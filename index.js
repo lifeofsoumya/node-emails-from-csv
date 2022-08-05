@@ -41,9 +41,9 @@ function sendMail() {
 let mailDetails = {
     from: process.env.GID,
     to: 'mondalsoumya2001@gmail.com',
-    bcc: csvRecords,
+    bcc: csvEmails,
     subject: `Welcome to Exposys Data Labs`,
-    HTML: '<h1> Hi There, greetings from Exposys </h1>'
+    html: "<h1> Hi There, greetings from Exposys </h1>"
     // content to added into the mail
 };
 
@@ -58,7 +58,7 @@ mailTransporter.sendMail(mailDetails, function(err, data) {
 
 const startExecution = async () => {
     await readCSVFile()
-    // await sendMail();
+    await sendMail();
 }
 
 
@@ -70,9 +70,10 @@ const readCSVFile = () => {
             })
             .on('end', () => {
                 for(const csvRecord of csvRecords){
-                    csvEmails.push(csvRecord.Email);
+                    csvEmails.push(csvRecord[1]);
                 }
-                console.log(csvEmails)
+                // console.log(csvRecords) // whole data
+                console.log(csvEmails) // only email
             });
             
 }
